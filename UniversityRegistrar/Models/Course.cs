@@ -85,10 +85,10 @@ namespace UniversityRegistrar.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"DELETE FROM classes WHERE id=@id; DELETE FROM students_classes WHERE classes_id=@id;";
+            cmd.CommandText = @"DELETE FROM classes WHERE id=@id; DELETE FROM students_classes WHERE class_id=@id;";
             MySqlParameter prmId = new MySqlParameter();
             prmId.ParameterName = "@id";
-            prmId.Value = _id;
+            prmId.Value = Id;
             cmd.Parameters.Add(prmId);
             cmd.ExecuteNonQuery();
             conn.Close();
@@ -96,6 +96,33 @@ namespace UniversityRegistrar.Models
             {
                 conn.Dispose();
             }
+        }
+
+        public static Course Find(int courseId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT * FROM classes WHERE id=@id;";
+            MySqlParameter prmId = new MySqlParameter();
+            prmId.ParameterName = "@id";
+            prmId.Value = courseId;
+            cmd.Parameters.Add(prmId);
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            string courseName = "";
+            string courseNumber = "";
+            while(rdr.Read())
+            {
+                courseName = rdr.GetString(1);
+                courseNumber = rdr.GetString(2);
+            }
+            Course foundCourse = new Course(courseName, courseNumber, courseId);
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+            return foundCourse;
         }
     }   
 }

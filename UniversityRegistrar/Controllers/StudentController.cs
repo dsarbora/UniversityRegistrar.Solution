@@ -29,6 +29,25 @@ namespace UniversityRegistrar.Controllers
             return RedirectToAction("Index");
 
         }
+
+        [HttpGet("/students/{id}")]
+        public ActionResult Show(int id)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            Student selectedStudent = Student.Find(id);
+            List <Course> allCourses = Course.GetAll();
+            model.Add("selectedStudent", selectedStudent);
+            model.Add("allCourses", allCourses);
+            return View(model);
+        }
+
+        [HttpPost("/students/{studentId}/delete")]
+        public ActionResult Delete(int studentId)
+        {
+            Student deletedStudent = Student.Find(studentId);
+            deletedStudent.Delete();
+            return RedirectToAction("Index");
+        }
     }
     
 }

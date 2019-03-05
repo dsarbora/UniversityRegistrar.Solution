@@ -10,7 +10,7 @@ namespace UniversityRegistrar.Controllers
         [HttpGet("/courses")]
         public ActionResult Index()
         {
-            List<Course> allCourses = new List<Course>{};
+            List<Course> allCourses = Course.GetAll();
             return View(allCourses);
         }
 

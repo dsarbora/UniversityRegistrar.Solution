@@ -89,7 +89,7 @@ namespace UniversityRegistrar.Models
             cmd.CommandText = @"DELETE FROM students WHERE id=@id; DELETE FROM students_classes WHERE student_id=@id;";
             MySqlParameter prmId = new MySqlParameter();
             prmId.ParameterName = "@id";
-            prmId.Value = _id;
+            prmId.Value = Id;
             cmd.Parameters.Add(prmId);
             cmd.ExecuteNonQuery();
             conn.Close();
@@ -97,6 +97,33 @@ namespace UniversityRegistrar.Models
             {
                 conn.Dispose();
             }
+        }
+
+        public static Student Find(int studentId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT * FROM students WHERE id=@id;";
+            MySqlParameter prmId = new MySqlParameter();
+            prmId.ParameterName = "@id";
+            prmId.Value = studentId;
+            cmd.Parameters.Add(prmId);
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            string studentName = "";
+            DateTime DateOfEnrollment = DateTime.Now;
+            while(rdr.Read())
+            {
+                studentName = rdr.GetString(1);
+                DateOfEnrollment = rdr.GetDateTime(2);
+            }
+            Student foundStudent = new Student(studentName, DateOfEnrollment, studentId);
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+            return foundStudent;
         }
     }
 }

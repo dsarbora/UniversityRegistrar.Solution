@@ -7,10 +7,13 @@
     <ul>
     @foreach (Course course in @Model)
     {
-        <li>@course.GetName()</li>
+        <li><a href="/courses/@course.GetId()">@course.GetName()</a></li>
     }
     </ul>
 }
 
 <a href="/courses/new">Add a course</a>
 <a href="/">Back home</a>
+
+
+

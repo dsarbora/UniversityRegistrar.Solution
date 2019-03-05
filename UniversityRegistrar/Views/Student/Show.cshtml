@@ -1,0 +1,9 @@
+@using UniversityRegistrar.Models;
+
+<h1>Student Details</h1>
+<h2>Student: @Model["selectedStudent"].GetName() Date: @Model["selectedStudent"].GetDateOfEnrollment() </h2>
+
+<form action='/students/@Model["selectedStudent"].GetId()/delete' method="post">
+    <button type="submit">Delete </button>
+</form>
+
