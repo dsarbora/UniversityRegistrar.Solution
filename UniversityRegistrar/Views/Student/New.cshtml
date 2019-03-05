@@ -1,0 +1,12 @@
+<h1>Add a new Student</h1>
+
+<form action="/students/create" method="post">
+  <label for="name">Item Name:</label>
+  <input id="name" name="name" type="text">
+
+  <input id="date" name="date"  type="hidden" value = "@DateTime.Now"> <!--DATE TIME-->
+  <button type="submit">Add </button>
+</form>
+
+<p><a href="/">Back home</a></p>
+<p><a href="/students">View all students</a></p>

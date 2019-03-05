@@ -1,0 +1,11 @@
+@using ToDoList.Models;
+
+<h1>Course Details</h1>
+<h2>Course: @Model["selectedCourse"].GetName()</h2>
+
+<form action='/courses/@Model["selectedCourse"].GetId()/delete' method="post">
+    <button type="submit">Delete </button>
+</form>
+
+
+
