@@ -15,6 +15,15 @@ namespace UniversityRegistrar.Controllers
             return View(allStudents);
         }
 
+        [HttpPost("students/{studentId}/courses/new")]
+        public ActionResult AddCourse(int studentId, int courseId)
+        {
+            Student foundStudent = Student.Find(studentId);
+            Course foundCourse = Course.Find(courseId);
+            foundStudent.AddCourse(foundCourse.GetId());
+            return RedirectToAction("Show", new {id=studentId});
+        }
+
         [HttpGet("/students/new")]
         public ActionResult New()
         {
@@ -36,6 +45,8 @@ namespace UniversityRegistrar.Controllers
             Dictionary<string, object> model = new Dictionary<string, object>();
             Student selectedStudent = Student.Find(id);
             List <Course> allCourses = Course.GetAll();
+            List<Course> studentCourses = selectedStudent.GetCourses();
+            model.Add("studentCourses", studentCourses);
             model.Add("selectedStudent", selectedStudent);
             model.Add("allCourses", allCourses);
             return View(model);

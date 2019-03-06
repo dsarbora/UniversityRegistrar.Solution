@@ -35,8 +35,11 @@ namespace UniversityRegistrar.Controllers
             Dictionary<string, object> model = new Dictionary<string, object>();
             Course selectedCourse = Course.Find(id);
             List <Student> allStudents = Student.GetAll();
+            List<Student> courseStudents = selectedCourse.GetStudents();
+            model.Add("courseStudents", courseStudents);
             model.Add("selectedCourse", selectedCourse);
             model.Add("allStudents", allStudents);
+
             return View(model);
         }
 

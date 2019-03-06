@@ -2,10 +2,24 @@
 
 <h1>Course Details</h1>
 <h2>Course: @Model["selectedCourse"].GetName()</h2>
+<h2>Number: @Model["selectedCourse"].GetNumber()</h2>
 
 <form action='/courses/@Model["selectedCourse"].GetId()/delete' method="post">
     <button type="submit">Delete </button>
 </form>
 
+<h4>Add a student to this course:</h4>
 
+<form action='/courses/@Model["selectedCourse"].GetId()/students/new' method='post'>
+  <label for='studentId'>Select a student</label>
+  <select id='studentId' name='studentId' type='text'>
+
+    @foreach (var student in @Model["allStudents"])
+    {
+      <option value='@student.GetId()'>@student.GetName()</option>
+    }
+
+  </select>
+  <button type='submit'>Add</button>
+</form>
 
